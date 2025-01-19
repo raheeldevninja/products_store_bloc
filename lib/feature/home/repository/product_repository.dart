@@ -19,6 +19,20 @@ class ProductRepository {
     else {
       throw Exception(response.error);
     }
+  }
+
+  Future<void> createProduct(Map<String, dynamic> product) async {
+
+    final response = await productService.createProduct(product);
+
+    log('create product response: ${response.body}');
+
+    if(response.isSuccessful) {
+      return response.body;
+    }
+    else {
+      throw Exception(response.error);
+    }
 
   }
 

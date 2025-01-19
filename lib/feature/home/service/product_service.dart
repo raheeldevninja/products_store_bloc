@@ -8,6 +8,9 @@ abstract class ProductService extends ChopperService {
   @Get(path: 'products')
   Future<Response> getAllProducts();
 
+  @Post(path: 'products')
+  Future<Response> createProduct(@Body() Map<String, dynamic> product);
+
   static ProductService create([ChopperClient? client]) => _$ProductService(client);
 
 }

@@ -1,22 +1,23 @@
 import 'package:products_store_bloc/feature/home/model/rating.dart';
 
 class Product {
-  final int id;
+  final int? id;
   final String title;
   final double price;
   final String description;
   final String category;
   final String image;
-  final Rating rating;
+  final Rating? rating;
 
   Product({
-    required this.id,
+    this.id,
+    this.rating,
     required this.title,
     required this.price,
     required this.description,
     required this.category,
     required this.image,
-    required this.rating,
+
   });
 
   // Factory constructor for creating a Product instance from JSON
@@ -41,7 +42,7 @@ class Product {
       'description': description,
       'category': category,
       'image': image,
-      'rating': rating.toJson(),
+      'rating': rating?.toJson(),
     };
   }
 }

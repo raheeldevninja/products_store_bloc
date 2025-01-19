@@ -79,12 +79,12 @@ class ProductItem extends StatelessWidget {
                       const Icon(Icons.star, color: Colors.amber, size: 16.0),
                       const SizedBox(width: 4.0),
                       Text(
-                        product.rating.rate.toString(),
+                        product.rating?.rate.toString() ?? '0.0',
                         style: const TextStyle(fontSize: 14.0),
                       ),
                       const SizedBox(width: 8.0),
                       Text(
-                        '(${product.rating.count} reviews)',
+                        '(${product.rating?.count ?? 0} reviews)',
                         style: TextStyle(
                           fontSize: 12.0,
                           color: Colors.grey[600],

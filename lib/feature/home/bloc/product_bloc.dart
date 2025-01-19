@@ -9,6 +9,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   ProductBloc(this.repository) : super(ProductInitialState()) {
     on<LoadProducts>(_onLoadProducts);
+    on<CreateProduct>(_onCreateProduct);
   }
 
   _onLoadProducts(LoadProducts event, Emitter<ProductState> emit) async {
@@ -22,6 +23,18 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(ProductErrorState(e.toString()));
     }
 
+  }
+
+  _onCreateProduct(CreateProduct event, Emitter<ProductState> emit) async {
+    emit(ProductLoadingState());
+
+    try {
+      await repository.createProduct(event.product.toJson());
+      add(LoadProducts());
+    }
+    catch(e) {
+      emit(ProductErrorState(e.toString()));
+    }
   }
 
 }
