@@ -22,7 +22,7 @@ class ProductItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Product Image
             ClipRRect(
@@ -94,6 +94,40 @@ class ProductItem extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(width: 16.0),
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    iconColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12), // <-- Radius
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Icon(
+                    Icons.edit,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    iconColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12), // <-- Radius
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Icon(
+                    Icons.delete,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
