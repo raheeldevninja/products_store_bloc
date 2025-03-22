@@ -11,4 +11,23 @@ class LoadProducts extends ProductEvent {}
 class CreateProduct extends ProductEvent {
   final Product product;
   CreateProduct(this.product);
+
+  @override
+  List<Object?> get props => [product];
+}
+
+class UpdateProduct extends ProductEvent {
+  final Product product;
+  UpdateProduct(this.product);
+
+  @override
+  List<Object?> get props => [product];
+}
+
+class DeleteProduct extends ProductEvent {
+  final int productId;
+  DeleteProduct(this.productId);
+
+  @override
+  List<Object?> get props => [productId];
 }

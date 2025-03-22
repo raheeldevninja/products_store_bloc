@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
+import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
 import 'package:products_store_bloc/feature/home/model/product.dart';
 
 class ProductItem extends StatelessWidget {
@@ -108,7 +111,19 @@ class ProductItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12), // <-- Radius
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+
+                    final productToUpdate = Product(
+                      id: product.id,
+                      title: 'Bag',
+                      price: 499,
+                      description: 'New Bag',
+                      image: 'https://i.pravatar.cc',
+                      category: 'Bag',
+                    );
+
+                    context.read<ProductBloc>().add(UpdateProduct(productToUpdate));
+                  },
                   child: const Icon(
                     Icons.edit,
                   ),
@@ -122,7 +137,9 @@ class ProductItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12), // <-- Radius
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<ProductBloc>().add(DeleteProduct(product.id!));
+                  },
                   child: const Icon(
                     Icons.delete,
                   ),

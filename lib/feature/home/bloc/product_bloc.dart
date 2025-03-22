@@ -10,6 +10,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc(this.repository) : super(ProductInitialState()) {
     on<LoadProducts>(_onLoadProducts);
     on<CreateProduct>(_onCreateProduct);
+    on<UpdateProduct>(_onUpdateProduct);
+    on<DeleteProduct>(_onDeleteProduct);
   }
 
   _onLoadProducts(LoadProducts event, Emitter<ProductState> emit) async {
@@ -30,6 +32,30 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     try {
       await repository.createProduct(event.product.toJson());
+      add(LoadProducts());
+    }
+    catch(e) {
+      emit(ProductErrorState(e.toString()));
+    }
+  }
+
+  _onUpdateProduct(UpdateProduct event, Emitter<ProductState> emit) async {
+    emit(ProductLoadingState());
+
+    try {
+      await repository.updateProduct(event.product.id!, event.product.toJson());
+      add(LoadProducts());
+    }
+    catch(e) {
+      emit(ProductErrorState(e.toString()));
+    }
+  }
+
+  _onDeleteProduct(DeleteProduct event, Emitter<ProductState> emit) async {
+    emit(ProductLoadingState());
+
+    try {
+      await repository.deleteProduct(event.productId);
       add(LoadProducts());
     }
     catch(e) {

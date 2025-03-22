@@ -36,4 +36,28 @@ class ProductRepository {
 
   }
 
+  Future<void> updateProduct(int id, Map<String, dynamic> product) async {
+    final response = await productService.updateProduct(id, product);
+    log('update product response: ${response.body}');
+
+    try {
+      return response.body;
+    }
+    catch(e) {
+      throw Exception(response.error);
+    }
+  }
+
+  Future<void> deleteProduct(int id) async {
+    final response = await productService.deleteProduct(id);
+    log('delete product response: ${response.body}');
+
+    if(response.isSuccessful) {
+      return response.body;
+    }
+    else {
+      throw Exception(response.error);
+    }
+  }
+
 }
