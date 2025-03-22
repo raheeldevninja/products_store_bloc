@@ -74,4 +74,18 @@ class ProductRepository {
     }
   }
 
+  Future<List<dynamic>> getCategoryProducts(String category) async {
+
+    final response = await productService.getCategoryProducts(category);
+
+    log('get category products response: ${response.body}');
+
+    if(response.isSuccessful) {
+      return response.body as List<dynamic>;
+    }
+    else {
+      throw Exception(response.error);
+    }
+  }
+
 }

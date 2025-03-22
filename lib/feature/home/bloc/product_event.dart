@@ -33,3 +33,12 @@ class DeleteProduct extends ProductEvent {
 }
 
 class GetCategories extends ProductEvent {}
+
+class GetCategoryProducts extends ProductEvent {
+  final String category;
+
+  GetCategoryProducts(this.category);
+
+  @override
+  List<Object?> get props => [category];
+}

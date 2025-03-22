@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
           }
           else if(state is CategoryLoadedState) {
             categories = state.categories;
+            categories.insert(0, 'All');
           }
         },
         builder: (context, state) {

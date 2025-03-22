@@ -13,6 +13,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<UpdateProduct>(_onUpdateProduct);
     on<DeleteProduct>(_onDeleteProduct);
     on<GetCategories>(_onGetCategories);
+    on<GetCategoryProducts>(_onGetCategoryProducts);
   }
 
   _onLoadProducts(LoadProducts event, Emitter<ProductState> emit) async {
@@ -76,6 +77,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       final categories = await repository.getCategories();
       emit(CategoryLoadedState(categories));
+    }
+    catch(e) {
+      emit(ErrorState(e.toString()));
+    }
+
+  }
+
+  _onGetCategoryProducts(GetCategoryProducts event, Emitter<ProductState> emit) async {
+    emit(LoadingState());
+
+    try {
+      final products = await repository.getCategoryProducts(event.category);
+      emit(ProductLoadedState(products));
     }
     catch(e) {
       emit(ErrorState(e.toString()));

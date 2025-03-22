@@ -20,6 +20,9 @@ abstract class ProductService extends ChopperService {
   @Get(path: 'products/categories')
   Future<Response> getCategories();
 
+  @Get(path: 'products/category/{category}')
+  Future<Response> getCategoryProducts(@Path() String category);
+
   static ProductService create([ChopperClient? client]) => _$ProductService(client);
 
 }

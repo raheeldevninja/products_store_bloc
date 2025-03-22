@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
+import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
+import 'package:products_store_bloc/feature/home/ui/widgets/category_item.dart';
 
 class CategoriesList extends StatelessWidget {
   final List<dynamic> categories;
@@ -13,31 +17,23 @@ class CategoriesList extends StatelessWidget {
     return SizedBox(
       height: 120,
       child: ListView.builder(
+          shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemCount: categories.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: InkWell(
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-                onTap: () {},
-                child: SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: Card(
-                    margin: EdgeInsets.zero,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Center(
-                          child: Text(
-                        categories[index],
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      )),
-                    ),
-                  ),
-                ),
-              ),
+            String category = categories[index];
+
+            return CategoryItem(
+              category: category,
+              onTap: () {
+                if (category == 'All') {
+                  context.read<ProductBloc>().add(LoadProducts());
+                } else {
+                  context
+                      .read<ProductBloc>()
+                      .add(GetCategoryProducts(category));
+                }
+              },
             );
           }),
     );
