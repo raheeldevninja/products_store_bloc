@@ -30,13 +30,23 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: BlocBuilder<ProductBloc, ProductState>(
+      body: BlocConsumer<ProductBloc, ProductState>(
+        listener: (context, state) {
+          if (state is ProductSuccessState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message), backgroundColor: Colors.green),
+            );
+          } else if (state is ProductErrorState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error), backgroundColor: Colors.red),
+            );
+          }
+        },
         builder: (context, state) {
           if (state is ProductLoadingState) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is ProductErrorState) {
-            return Center(child: Text(state.error));
-          } else if (state is ProductLoadedState) {
+          }
+          else if (state is ProductLoadedState) {
             return ListView.builder(
               itemCount: state.products.length,
               itemBuilder: (context, index) {

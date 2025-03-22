@@ -43,7 +43,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(ProductLoadingState());
 
     try {
-      await repository.updateProduct(event.product.id!, event.product.toJson());
+      String message = await repository.updateProduct(event.product.id!, event.product.toJson());
+
+      emit(ProductSuccessState(message));
+
       add(LoadProducts());
     }
     catch(e) {
@@ -55,7 +58,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(ProductLoadingState());
 
     try {
-      await repository.deleteProduct(event.productId);
+      String message = await repository.deleteProduct(event.productId);
+
+      emit(ProductSuccessState(message));
+
       add(LoadProducts());
     }
     catch(e) {
