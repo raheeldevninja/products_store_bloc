@@ -17,6 +17,9 @@ abstract class ProductService extends ChopperService {
   @Delete(path: '/products/{id}')
   Future<Response> deleteProduct(@Path() int id);
 
+  @Get(path: 'products/categories')
+  Future<Response> getCategories();
+
   static ProductService create([ChopperClient? client]) => _$ProductService(client);
 
 }
