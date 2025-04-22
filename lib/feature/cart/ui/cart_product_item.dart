@@ -1,18 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
-import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
 import 'package:products_store_bloc/feature/home/model/product.dart';
 
-class ProductItem extends StatelessWidget {
-  const ProductItem(
-    this.product, {
-    super.key,
-  });
-
+class CartProductItem extends StatelessWidget {
   final Product product;
+  final int quantity;
+  const CartProductItem({super.key, required this.product, required this.quantity});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +27,7 @@ class ProductItem extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: product.image,
                 placeholder: (context, url) =>
-                    const CupertinoActivityIndicator(),
+                const CupertinoActivityIndicator(),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 height: 80.0,
                 width: 80.0,
@@ -68,7 +62,7 @@ class ProductItem extends StatelessWidget {
                   const SizedBox(height: 8.0),
                   // Price
                   Text(
-                    '\$${product.price.toStringAsFixed(2)}',
+                    '\$${product.price.toStringAsFixed(2)} x $quantity = \$${product.price * quantity}',
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,
@@ -98,36 +92,13 @@ class ProductItem extends StatelessWidget {
                 ],
               ),
             ),
+
             const SizedBox(width: 16.0),
 
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    iconColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                  ),
-                  onPressed: () {
 
-                    final productToUpdate = Product(
-                      id: product.id,
-                      title: 'Bag',
-                      price: 499,
-                      description: 'New Bag',
-                      image: 'https://i.pravatar.cc',
-                      category: 'Bag',
-                    );
-
-                    context.read<ProductBloc>().add(UpdateProduct(productToUpdate));
-                  },
-                  child: const Icon(
-                    Icons.edit,
-                  ),
-                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -138,31 +109,18 @@ class ProductItem extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    context.read<ProductBloc>().add(DeleteProduct(product.id!));
+
+
+
                   },
                   child: const Icon(
                     Icons.delete,
                   ),
                 ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    iconColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                  ),
-                  onPressed: () {
-                    //add product to cart
 
-                  },
-                  child: const Icon(
-                    Icons.shopping_cart,
-                  ),
-                ),
               ],
             ),
+
           ],
         ),
       ),

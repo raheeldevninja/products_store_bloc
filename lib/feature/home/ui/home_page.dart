@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_bloc/feature/auth/ui/page/login_page.dart';
+import 'package:products_store_bloc/feature/cart/ui/cart_page.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_state.dart';
@@ -35,6 +36,13 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Home'),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const CartPage()));
+            },
+            icon: const Icon(Icons.shopping_cart),
+          ),
           IconButton(
             onPressed: () {
               Navigator.pushReplacement(context,

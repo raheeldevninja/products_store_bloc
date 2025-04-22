@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:products_store_bloc/feature/home/model/product.dart';
 
 abstract class ProductState extends Equatable {
   @override
@@ -17,6 +18,14 @@ class ProductLoadedState extends ProductState {
   List<Object?> get props => [products];
 }
 
+class SingleProductLoadedState extends ProductState {
+  final Product product;
+
+  SingleProductLoadedState(this.product);
+
+  @override
+  List<Object?> get props => [product];
+}
 
 class SuccessState extends ProductState {
   final String message;

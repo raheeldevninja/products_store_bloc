@@ -5,6 +5,9 @@ import 'package:products_store_bloc/feature/auth/bloc/auth_bloc.dart';
 import 'package:products_store_bloc/feature/auth/repository/auth_repository.dart';
 import 'package:products_store_bloc/feature/auth/service/auth_service.dart';
 import 'package:products_store_bloc/feature/auth/ui/page/login_page.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
+import 'package:products_store_bloc/feature/cart/repository/cart_repository.dart';
+import 'package:products_store_bloc/feature/cart/service/cart_service.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
 import 'package:products_store_bloc/feature/home/repository/product_repository.dart';
@@ -22,6 +25,7 @@ class ProductsStoreApp extends StatelessWidget {
       providers: [
         RepositoryProvider(create: (_) => AuthRepository(chopperClient.getService<AuthService>())),
         RepositoryProvider(create: (_) => ProductRepository(chopperClient.getService<ProductService>())),
+        RepositoryProvider(create: (_) => CartRepository(chopperClient.getService<CartService>())),
       ],
       child: Builder(
         builder: (context) {
@@ -29,6 +33,7 @@ class ProductsStoreApp extends StatelessWidget {
             providers: [
               BlocProvider(create: (_) => AuthBloc(context.read<AuthRepository>())),
               BlocProvider(create: (_) => ProductBloc(context.read<ProductRepository>())..add(LoadProducts())),
+              BlocProvider(create: (_) => CartBloc(context.read<CartRepository>())),
             ],
             child: MaterialApp(
               title: 'Products Store',

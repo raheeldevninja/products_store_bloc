@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:products_store_bloc/feature/home/model/product.dart';
 import 'package:products_store_bloc/feature/home/service/product_service.dart';
 
 class ProductRepository {
@@ -15,6 +16,20 @@ class ProductRepository {
 
     if(response.isSuccessful) {
       return response.body as List<dynamic>;
+    }
+    else {
+      throw Exception(response.error);
+    }
+  }
+
+  Future<Product> getSingleProduct(int id) async {
+
+    final response = await productService.getSingleProduct(id);
+
+    log('get single product response: ${response.body}');
+
+    if(response.isSuccessful) {
+      return Product.fromJson(response.body);
     }
     else {
       throw Exception(response.error);
