@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_bloc.dart';
@@ -73,6 +74,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 20,
+                      ),
+                    ),
                     onPressed: (state is AuthLoadingState)
                         ? null
                         : () {
@@ -85,6 +94,28 @@ class _LoginPageState extends State<LoginPage> {
                     child: (state is AuthLoadingState)
                         ? const CircularProgressIndicator(color: Colors.blue)
                         : const Text('Submit'),
+                  ),
+                  const SizedBox(height: 24),
+                  RichText(
+                    text: TextSpan(
+                        text: "Don't have an account? ",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "Register",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()..onTap = () {},
+                          ),
+                        ]),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

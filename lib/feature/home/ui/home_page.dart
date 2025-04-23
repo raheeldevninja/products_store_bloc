@@ -69,6 +69,9 @@ class _HomePageState extends State<HomePage> {
           else if(state is CategoryLoadedState) {
             categories = state.categories;
             categories.insert(0, 'All');
+
+            //get all products
+            context.read<ProductBloc>().add(LoadProducts());
           }
         },
         builder: (context, state) {
