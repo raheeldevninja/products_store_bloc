@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_bloc/feature/auth/ui/page/login_page.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_state.dart';
 import 'package:products_store_bloc/feature/cart/ui/cart_page.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
@@ -30,8 +32,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-    context.read<ProductBloc>().add(GetCategories());
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -41,7 +41,21 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const CartPage()));
             },
-            icon: const Icon(Icons.shopping_cart),
+            icon: BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+
+                int cartItemCount = 0;
+
+                if(state is CartLoadedState) {
+                  cartItemCount = state.cartItems.length;
+                }
+
+                return  Badge(
+                  label: Text('$cartItemCount'),
+                  child: const Icon(Icons.shopping_cart),
+                );
+              },
+            ),
           ),
           IconButton(
             onPressed: () {

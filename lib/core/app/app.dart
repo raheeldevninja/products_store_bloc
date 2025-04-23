@@ -6,6 +6,7 @@ import 'package:products_store_bloc/feature/auth/repository/auth_repository.dart
 import 'package:products_store_bloc/feature/auth/service/auth_service.dart';
 import 'package:products_store_bloc/feature/auth/ui/page/login_page.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_event.dart';
 import 'package:products_store_bloc/feature/cart/repository/cart_repository.dart';
 import 'package:products_store_bloc/feature/cart/service/cart_service.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
@@ -32,8 +33,8 @@ class ProductsStoreApp extends StatelessWidget {
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => AuthBloc(context.read<AuthRepository>())),
-              BlocProvider(create: (_) => ProductBloc(context.read<ProductRepository>())..add(LoadProducts())),
-              BlocProvider(create: (_) => CartBloc(context.read<CartRepository>(), context.read<ProductRepository>())),
+              BlocProvider(create: (_) => ProductBloc(context.read<ProductRepository>())..add(GetCategories())),
+              BlocProvider(create: (_) => CartBloc(context.read<CartRepository>(), context.read<ProductRepository>())..add(GetSingleCartProducts(1))),
             ],
             child: MaterialApp(
               title: 'Products Store',

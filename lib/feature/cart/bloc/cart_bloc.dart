@@ -13,8 +13,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc(this.repository, this.productRepository) : super(CartInitialState()) {
     on<GetSingleCartProducts>(_onGetSingleCartProducts);
     on<AddProductInCart>(_onAddProductInCart);
-
-    add(GetSingleCartProducts(1));
   }
 
   _onGetSingleCartProducts( GetSingleCartProducts event, Emitter<CartState> emit) async {
