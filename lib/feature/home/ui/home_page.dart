@@ -84,7 +84,6 @@ class _HomePageState extends State<HomePage> {
                 children: [
 
                   CategoriesList(categories),
-                  const SizedBox(height: 10),
                   ProductsList(products),
 
                 ],
