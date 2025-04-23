@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:products_store_bloc/feature/cart/model/cart_product.dart';
 import 'package:products_store_bloc/feature/cart/model/single_cart_model.dart';
+import 'package:products_store_bloc/feature/cart/model/update_cart_model.dart';
 import 'package:products_store_bloc/feature/cart/service/cart_service.dart';
+import 'package:products_store_bloc/feature/home/model/product.dart';
+
 
 class CartRepository {
   final CartService service;
@@ -22,5 +27,27 @@ class CartRepository {
     }
   }
 
+  Future<List<CartProduct>> addProductInCart(int id, UpdateCartModel payload) async {
+
+    final response = await service.addProductInCart(id, payload.toJson());
+
+    log('add product in cart response: ${jsonEncode(response.body)}');
+
+    if(response.isSuccessful) {
+      final List<dynamic> productsJson = response.body['products'];
+
+      List<CartProduct> cartProducts = productsJson.map((productJson) {
+        return CartProduct(
+          product: Product.fromJson(productJson),
+          quantity: productJson['quantity'],
+        );
+      }).toList();
+
+      return cartProducts;
+    }
+    else {
+      throw Exception(response.error);
+    }
+  }
 
 }

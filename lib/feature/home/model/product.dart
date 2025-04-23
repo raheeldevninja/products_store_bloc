@@ -8,6 +8,7 @@ class Product {
   final String category;
   final String image;
   final Rating? rating;
+  final int? quantity;
 
   Product({
     this.id,
@@ -17,6 +18,7 @@ class Product {
     required this.description,
     required this.category,
     required this.image,
+    this.quantity,
 
   });
 
@@ -30,6 +32,7 @@ class Product {
       category: json['category'],
       image: json['image'],
       rating: Rating.fromJson(json['rating']),
+      quantity: json['quantity'],
     );
   }
 
@@ -43,6 +46,7 @@ class Product {
       'category': category,
       'image': image,
       'rating': rating?.toJson(),
+      'quantity': quantity,
     };
   }
 }

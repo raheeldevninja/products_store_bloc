@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:products_store_bloc/feature/home/model/product.dart';
+import 'package:products_store_bloc/feature/cart/model/update_cart_model.dart';
 
 class CartEvent extends Equatable {
   @override
@@ -16,10 +16,18 @@ class GetSingleCartProducts extends CartEvent {
 }
 
 class AddProductInCart extends CartEvent {
-  final Product product;
+  final int id;
+  final UpdateCartModel payload;
 
-  AddProductInCart(this.product);
+  AddProductInCart(this.id, this.payload);
 
   @override
-  List<Object?> get props => [product];
+  List<Object?> get props => [id, payload];
+}
+
+class RemoveProductFromCart extends CartEvent {
+  final int cartId;
+  final int productId;
+
+  RemoveProductFromCart(this.cartId, this.productId);
 }

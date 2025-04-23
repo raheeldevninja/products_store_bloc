@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_event.dart';
 import 'package:products_store_bloc/feature/cart/model/cart_product.dart';
 import 'package:products_store_bloc/feature/home/model/product.dart';
 
@@ -15,7 +18,7 @@ class CartProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Product product = cartProduct.product;
-    int quantity = cartProduct.quantity;
+    int quantity = product.quantity ?? 1;
     double totalPrice = product.price * quantity;
 
     return Card(
@@ -115,7 +118,10 @@ class CartProductItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12), // <-- Radius
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    //delete cart time
+                    context.read<CartBloc>().add(RemoveProductFromCart(1, product.id!));
+                  },
                   child: const Icon(
                     Icons.delete,
                   ),

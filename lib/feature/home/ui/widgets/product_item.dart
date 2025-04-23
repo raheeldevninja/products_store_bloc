@@ -2,6 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_event.dart';
+import 'package:products_store_bloc/feature/cart/bloc/cart_state.dart';
+import 'package:products_store_bloc/feature/cart/model/cart_product.dart';
+import 'package:products_store_bloc/feature/cart/model/update_cart_model.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
 import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
 import 'package:products_store_bloc/feature/home/model/product.dart';
@@ -154,7 +159,47 @@ class ProductItem extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    //add product to cart
+
+                    // Step 1: Get existing cart products
+                    final existingCartProducts = context.read<CartBloc>().state;
+
+                    List<CartProduct> existingProducts = [];
+
+                    if (existingCartProducts is CartLoadedState) {
+                      existingProducts = existingCartProducts.cartItems;
+                    }
+
+                    // Step 2: Check if product already exists
+                    final index = existingProducts.indexWhere((cartProduct) => cartProduct.product.id == product.id);
+
+                    List<CartProduct> updatedProducts = List.from(existingProducts);
+
+                    if (index != -1) {
+                      // If product exists, increment quantity
+                      final existingProduct = updatedProducts[index];
+                      updatedProducts[index] = CartProduct(
+                        product: existingProduct.product,
+                        quantity: existingProduct.quantity + 1,
+                      );
+                    } else {
+                      // If not exist, add new product with quantity 1
+                      updatedProducts.add(
+                        CartProduct(
+                          product: product,
+                          quantity: 1,
+                        ),
+                      );
+                    }
+
+                    // Step 3: Create UpdateCartModel
+                    UpdateCartModel cartModel = UpdateCartModel(
+                      id: 1,
+                      userId: 0,
+                      products: updatedProducts,
+                    );
+
+                    // Step 4: Fire event
+                    context.read<CartBloc>().add(AddProductInCart(1, cartModel));
 
                   },
                   child: const Icon(

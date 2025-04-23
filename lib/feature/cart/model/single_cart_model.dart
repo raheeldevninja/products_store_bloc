@@ -2,7 +2,7 @@ class SingleCartResponse {
   int? id;
   int? userId;
   String? date;
-  List<CartProduct>? cartProducts;
+  List<CartProductModel>? cartProducts;
   int? iV;
 
   SingleCartResponse({this.id, this.userId, this.date, this.cartProducts, this.iV});
@@ -12,9 +12,9 @@ class SingleCartResponse {
     userId = json['userId'];
     date = json['date'];
     if (json['products'] != null) {
-      cartProducts = <CartProduct>[];
+      cartProducts = <CartProductModel>[];
       json['products'].forEach((v) {
-        cartProducts!.add(CartProduct.fromJson(v));
+        cartProducts!.add(CartProductModel.fromJson(v));
       });
     }
     iV = json['__v'];
@@ -33,13 +33,13 @@ class SingleCartResponse {
   }
 }
 
-class CartProduct {
+class CartProductModel {
   int? productId;
   int? quantity;
 
-  CartProduct({this.productId, this.quantity});
+  CartProductModel({this.productId, this.quantity});
 
-  CartProduct.fromJson(Map<String, dynamic> json) {
+  CartProductModel.fromJson(Map<String, dynamic> json) {
     productId = json['productId'];
     quantity = json['quantity'];
   }
