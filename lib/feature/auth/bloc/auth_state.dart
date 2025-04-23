@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 abstract class AuthState extends Equatable {
+  final String? emailError;
   final String? usernameError;
   final String? passwordError;
 
-  const AuthState({this.usernameError, this.passwordError});
+  const AuthState({this.emailError, this.usernameError, this.passwordError});
 
   @override
   List<Object?> get props => [usernameError, passwordError];
@@ -23,6 +24,15 @@ class AuthSuccessState extends AuthState {
   List<Object?> get props => [token];
 }
 
+class RegisterSuccessState extends AuthState {
+  final int id;
+
+  const RegisterSuccessState(this.id);
+
+  @override
+  List<Object?> get props => [id];
+}
+
 class AuthFailureState extends AuthState {
   final String error;
 
@@ -33,5 +43,5 @@ class AuthFailureState extends AuthState {
 }
 
 class AuthValidationError extends AuthState {
-  const AuthValidationError({super.usernameError, super.passwordError});
+  const AuthValidationError({super.emailError, super.usernameError, super.passwordError});
 }
