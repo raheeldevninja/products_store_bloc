@@ -33,7 +33,7 @@ class ProductsStoreApp extends StatelessWidget {
             providers: [
               BlocProvider(create: (_) => AuthBloc(context.read<AuthRepository>())),
               BlocProvider(create: (_) => ProductBloc(context.read<ProductRepository>())..add(LoadProducts())),
-              BlocProvider(create: (_) => CartBloc(context.read<CartRepository>())),
+              BlocProvider(create: (_) => CartBloc(context.read<CartRepository>(), context.read<ProductRepository>())),
             ],
             child: MaterialApp(
               title: 'Products Store',

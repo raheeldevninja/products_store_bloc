@@ -1,15 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:products_store_bloc/feature/cart/model/cart_product.dart';
 import 'package:products_store_bloc/feature/home/model/product.dart';
 
 class CartProductItem extends StatelessWidget {
-  final Product product;
-  final int quantity;
-  const CartProductItem({super.key, required this.product, required this.quantity});
+  final CartProduct cartProduct;
+
+  const CartProductItem(
+    this.cartProduct, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    Product product = cartProduct.product;
+    int quantity = cartProduct.quantity;
+    double totalPrice = product.price * quantity;
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       shape: RoundedRectangleBorder(
@@ -27,7 +35,7 @@ class CartProductItem extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: product.image,
                 placeholder: (context, url) =>
-                const CupertinoActivityIndicator(),
+                    const CupertinoActivityIndicator(),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 height: 80.0,
                 width: 80.0,
@@ -62,7 +70,7 @@ class CartProductItem extends StatelessWidget {
                   const SizedBox(height: 8.0),
                   // Price
                   Text(
-                    '\$${product.price.toStringAsFixed(2)} x $quantity = \$${product.price * quantity}',
+                    '\$${product.price.toStringAsFixed(2)} x $quantity = \$${totalPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,
@@ -98,7 +106,6 @@ class CartProductItem extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 const SizedBox(height: 16),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -108,19 +115,13 @@ class CartProductItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12), // <-- Radius
                     ),
                   ),
-                  onPressed: () {
-
-
-
-                  },
+                  onPressed: () {},
                   child: const Icon(
                     Icons.delete,
                   ),
                 ),
-
               ],
             ),
-
           ],
         ),
       ),

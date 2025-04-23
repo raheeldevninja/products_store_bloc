@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:products_store_bloc/feature/cart/model/single_cart_model.dart';
+import 'package:products_store_bloc/feature/cart/model/cart_product.dart';
 
 class CartState extends Equatable {
   @override
@@ -12,12 +12,12 @@ class CartLoadingState extends CartState {}
 
 class CartLoadedState extends CartState {
 
-  final SingleCartResponse cart;
+  final List<CartProduct> cartItems;
 
-  CartLoadedState(this.cart);
+  CartLoadedState(this.cartItems);
 
   @override
-  List<Object?> get props => [cart];
+  List<Object?> get props => [cartItems];
 
 }
 
