@@ -27,7 +27,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
       for (var cartProduct in cartResponse.cartProducts ?? []) {
         final product = await productRepository.getSingleProduct(cartProduct.productId ?? 0);
-        cartItems.add(CartProduct(product: product, quantity: cartProduct.quantity ?? 0));
+        cartItems.add(
+            CartProduct(
+              product: product,
+              quantity: cartProduct.quantity ?? 0,
+            )
+        );
       }
 
       emit((CartLoadedState(cartItems)));

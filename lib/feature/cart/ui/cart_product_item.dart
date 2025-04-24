@@ -18,7 +18,7 @@ class CartProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Product product = cartProduct.product;
-    int quantity = product.quantity ?? 1;
+    int quantity = cartProduct.quantity;
     double totalPrice = product.price * quantity;
 
     return Card(
