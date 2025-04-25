@@ -6,6 +6,8 @@ import 'package:products_store_bloc/feature/auth/bloc/auth_event.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_state.dart';
 import 'package:products_store_bloc/feature/auth/ui/page/register_page.dart';
 import 'package:products_store_bloc/feature/home/ui/home_page.dart';
+import 'package:products_store_bloc/feature/user/bloc/user_bloc.dart';
+import 'package:products_store_bloc/feature/user/bloc/user_state.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,9 +25,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final loginBloc = BlocProvider.of<AuthBloc>(context);
+
+    final userType = context.select<UserBloc, String>((bloc) {
+      final state = bloc.state;
+      if (state is UserSelected) {
+        return state.userType.label;
+      }
+      return '';
+    });
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: Text('$userType Login'),
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {

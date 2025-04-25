@@ -23,6 +23,9 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> products = [];
   List<dynamic> categories = [];
 
+  int? _lastCartCount;
+
+
   @override
   void initState() {
     super.initState();
@@ -44,10 +47,11 @@ class _HomePageState extends State<HomePage> {
             icon: BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
 
-                int cartItemCount = 0;
+                int cartItemCount = _lastCartCount ?? 0;
 
-                if(state is CartLoadedState) {
+                if (state is CartLoadedState) {
                   cartItemCount = state.cartItems.length;
+                  _lastCartCount = cartItemCount; // Cache the latest cart count
                 }
 
                 return  Badge(
