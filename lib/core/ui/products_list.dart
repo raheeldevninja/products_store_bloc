@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:products_store_bloc/feature/home/model/product.dart';
+import 'package:products_store_bloc/core/product/model/product.dart';
 import 'package:products_store_bloc/feature/home/ui/widgets/product_item.dart';
 
 class ProductsList extends StatelessWidget {

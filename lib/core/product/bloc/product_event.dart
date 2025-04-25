@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:products_store_bloc/feature/home/model/product.dart';
+import 'package:products_store_bloc/core/product/model/product.dart';
 
 abstract class ProductEvent extends Equatable {
   @override

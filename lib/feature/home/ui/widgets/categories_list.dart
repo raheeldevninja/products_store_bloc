@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
-import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
+import 'package:products_store_bloc/core/product/bloc/product_bloc.dart';
+import 'package:products_store_bloc/core/product/bloc/product_event.dart';
 import 'package:products_store_bloc/feature/home/ui/widgets/category_item.dart';
 
 class CategoriesList extends StatelessWidget {

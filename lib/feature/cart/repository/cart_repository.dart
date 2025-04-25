@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:products_store_bloc/core/product/model/product.dart';
 import 'package:products_store_bloc/feature/cart/model/cart_product.dart';
 import 'package:products_store_bloc/feature/cart/model/single_cart_model.dart';
 import 'package:products_store_bloc/feature/cart/model/update_cart_model.dart';
 import 'package:products_store_bloc/feature/cart/service/cart_service.dart';
-import 'package:products_store_bloc/feature/home/model/product.dart';
+
 
 
 class CartRepository {

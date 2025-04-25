@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_bloc/feature/admin_flow/product/ui/products_page.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_bloc.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_event.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_state.dart';
@@ -41,13 +42,27 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccessState) {
-            //navigate to home screen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomePage(),
-              ),
-            );
+
+            if(userType == 'Admin') {
+              //navigate to admin products screen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductsPage(),
+                ),
+              );
+            }
+            else if(userType == 'User') {
+              //navigate to user home screen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              );
+            }
+
+
           } else if (state is AuthFailureState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Login Failed: ${state.error}')),

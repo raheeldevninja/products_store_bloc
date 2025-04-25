@@ -3,37 +3,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_bloc/core/product/bloc/product_bloc.dart';
 import 'package:products_store_bloc/core/product/bloc/product_event.dart';
 import 'package:products_store_bloc/core/product/bloc/product_state.dart';
+import 'package:products_store_bloc/core/product/model/product.dart';
 import 'package:products_store_bloc/core/ui/products_list.dart';
 import 'package:products_store_bloc/feature/auth/ui/page/login_page.dart';
-import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
-import 'package:products_store_bloc/feature/cart/bloc/cart_state.dart';
-import 'package:products_store_bloc/feature/cart/ui/cart_page.dart';
-import 'package:products_store_bloc/feature/home/ui/widgets/categories_list.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProductsPage extends StatefulWidget {
+  const ProductsPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProductsPage> createState() => _ProductsPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProductsPageState extends State<ProductsPage> {
 
   List<dynamic> products = [];
-  List<dynamic> categories = [];
-
-  int? _lastCartCount;
-
 
   @override
   void initState() {
     super.initState();
-
-    _getCategories();
+    _getAllProducts();
   }
 
-  _getCategories() {
-    context.read<ProductBloc>().add(GetCategories());
+  _getAllProducts() {
+    context.read<ProductBloc>().add(LoadProducts());
   }
 
   @override
@@ -41,32 +33,10 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Products Page'),
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const CartPage()));
-            },
-            icon: BlocBuilder<CartBloc, CartState>(
-              builder: (context, state) {
-
-                int cartItemCount = _lastCartCount ?? 0;
-
-                if (state is CartLoadedState) {
-                  cartItemCount = state.cartItems.length;
-                  _lastCartCount = cartItemCount; // Cache the latest cart count
-                }
-
-                return  Badge(
-                  label: Text('$cartItemCount'),
-                  child: const Icon(Icons.shopping_cart),
-                );
-              },
-            ),
-          ),
           IconButton(
             onPressed: () {
               Navigator.pushReplacement(context,
@@ -90,13 +60,6 @@ class _HomePageState extends State<HomePage> {
           else if(state is ProductLoadedState) {
             products = state.products;
           }
-          else if(state is CategoryLoadedState) {
-            categories = state.categories;
-            categories.insert(0, 'All');
-
-            //get all products
-            context.read<ProductBloc>().add(LoadProducts());
-          }
         },
         builder: (context, state) {
 
@@ -106,16 +69,33 @@ class _HomePageState extends State<HomePage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CategoriesList(categories),
+
                   ProductsList(products),
+
                 ],
               ),
+
 
               (state is LoadingState) ? const Center(child: CircularProgressIndicator()) : const SizedBox(),
             ],
           );
 
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final product = Product(
+            title: 'Laptop',
+            price: 1000,
+            description: 'New laptop',
+            image: 'https://i.pravatar.cc',
+            category: 'Electronic',
+          );
+
+          context.read<ProductBloc>().add(CreateProduct(product));
+
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

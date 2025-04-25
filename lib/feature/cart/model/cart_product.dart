@@ -1,4 +1,4 @@
-import 'package:products_store_bloc/feature/home/model/product.dart';
+import 'package:products_store_bloc/core/product/model/product.dart';
 
 class CartProduct {
   final Product product;

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
-import 'package:products_store_bloc/feature/home/bloc/product_state.dart';
-import 'package:products_store_bloc/feature/home/repository/product_repository.dart';
+import 'package:products_store_bloc/core/product/bloc/product_event.dart';
+import 'package:products_store_bloc/core/product/bloc/product_state.dart';
+import 'package:products_store_bloc/core/product/repository/product_repository.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
 

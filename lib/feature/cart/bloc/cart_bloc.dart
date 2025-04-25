@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_bloc/core/product/repository/product_repository.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_event.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_state.dart';
 import 'package:products_store_bloc/feature/cart/model/cart_product.dart';
 import 'package:products_store_bloc/feature/cart/model/update_cart_model.dart';
 import 'package:products_store_bloc/feature/cart/repository/cart_repository.dart';
-import 'package:products_store_bloc/feature/home/repository/product_repository.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
 

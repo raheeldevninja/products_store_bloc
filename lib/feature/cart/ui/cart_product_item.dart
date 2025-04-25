@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_bloc/core/product/model/product.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_event.dart';
 import 'package:products_store_bloc/feature/cart/model/cart_product.dart';
-import 'package:products_store_bloc/feature/home/model/product.dart';
 
 class CartProductItem extends StatelessWidget {
   final CartProduct cartProduct;

@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:products_store_bloc/feature/home/model/product.dart';
-import 'package:products_store_bloc/feature/home/service/product_service.dart';
+import 'package:products_store_bloc/core/product/model/product.dart';
+import 'package:products_store_bloc/core/product/service/product_service.dart';
 
 class ProductRepository {
 

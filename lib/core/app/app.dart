@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_bloc/core/product/bloc/product_bloc.dart';
+import 'package:products_store_bloc/core/product/bloc/product_event.dart';
+import 'package:products_store_bloc/core/product/repository/product_repository.dart';
+import 'package:products_store_bloc/core/product/service/product_service.dart';
 import 'package:products_store_bloc/core/service/chopper_client.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_bloc.dart';
 import 'package:products_store_bloc/feature/auth/repository/auth_repository.dart';
@@ -10,10 +14,6 @@ import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_event.dart';
 import 'package:products_store_bloc/feature/cart/repository/cart_repository.dart';
 import 'package:products_store_bloc/feature/cart/service/cart_service.dart';
-import 'package:products_store_bloc/feature/home/bloc/product_bloc.dart';
-import 'package:products_store_bloc/feature/home/bloc/product_event.dart';
-import 'package:products_store_bloc/feature/home/repository/product_repository.dart';
-import 'package:products_store_bloc/feature/home/service/product_service.dart';
 
 class ProductsStoreApp extends StatelessWidget {
   const ProductsStoreApp({super.key});

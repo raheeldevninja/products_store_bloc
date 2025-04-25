@@ -1,4 +1,4 @@
-import 'package:products_store_bloc/feature/home/model/rating.dart';
+import 'package:products_store_bloc/core/product/model/rating.dart';
 
 class Product {
   final int? id;
