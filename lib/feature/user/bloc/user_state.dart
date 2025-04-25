@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:products_store_bloc/core/enums/user_type.dart';
 
-class UserState extends Equatable {
+abstract class UserState extends Equatable {
   @override
   List<Object?> get props => [];
 }

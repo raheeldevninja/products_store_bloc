@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_bloc/core/product/bloc/product_bloc.dart';
 import 'package:products_store_bloc/core/product/bloc/product_event.dart';
 import 'package:products_store_bloc/core/product/model/product.dart';
+import 'package:products_store_bloc/feature/admin_flow/product/ui/add_update_product_page.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_event.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_state.dart';
@@ -18,9 +19,11 @@ class ProductItem extends StatelessWidget {
   const ProductItem(
     this.product, {
     super.key,
+    required this.productsPageContext,
   });
 
   final Product product;
+  final BuildContext productsPageContext;
 
   @override
   Widget build(BuildContext context) {
@@ -133,16 +136,12 @@ class ProductItem extends StatelessWidget {
                     ),
                     onPressed: () {
 
-                      final productToUpdate = Product(
-                        id: product.id,
-                        title: 'Bag',
-                        price: 499,
-                        description: 'New Bag',
-                        image: 'https://i.pravatar.cc',
-                        category: 'Bag',
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddUpdateProductPage(product: product)),
                       );
 
-                      context.read<ProductBloc>().add(UpdateProduct(productToUpdate));
                     },
                     child: const Icon(
                       Icons.edit,

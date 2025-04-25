@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_bloc/core/product/bloc/product_bloc.dart';
-import 'package:products_store_bloc/core/product/bloc/product_event.dart';
 import 'package:products_store_bloc/core/product/repository/product_repository.dart';
 import 'package:products_store_bloc/core/product/service/product_service.dart';
 import 'package:products_store_bloc/core/service/chopper_client.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_bloc.dart';
+import 'package:products_store_bloc/feature/auth/bloc/auth_event.dart';
 import 'package:products_store_bloc/feature/auth/repository/auth_repository.dart';
 import 'package:products_store_bloc/feature/auth/service/auth_service.dart';
 import 'package:products_store_bloc/feature/user/bloc/user_bloc.dart';
+import 'package:products_store_bloc/feature/user/bloc/user_event.dart';
 import 'package:products_store_bloc/feature/user/ui/select_user_page.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_event.dart';
@@ -33,9 +34,9 @@ class ProductsStoreApp extends StatelessWidget {
         builder: (context) {
           return MultiBlocProvider(
             providers: [
-              BlocProvider(create: (_) => UserBloc()),
-              BlocProvider(create: (_) => AuthBloc(context.read<AuthRepository>())),
-              BlocProvider(create: (_) => ProductBloc(context.read<ProductRepository>())..add(GetCategories())),
+              BlocProvider(create: (_) => UserBloc()..add(LoadPersistedUser())),
+              BlocProvider(create: (_) => AuthBloc(context.read<AuthRepository>())..add(CheckLoginStatusEvent())),
+              BlocProvider(create: (_) => ProductBloc(context.read<ProductRepository>())),
               BlocProvider(create: (_) => CartBloc(context.read<CartRepository>(), context.read<ProductRepository>())..add(GetSingleCartProducts(1))),
             ],
             child: MaterialApp(

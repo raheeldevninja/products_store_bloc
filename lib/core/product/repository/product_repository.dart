@@ -8,14 +8,15 @@ class ProductRepository {
 
   ProductRepository(this.productService);
 
-  Future<List<dynamic>> getAllProducts() async {
+  Future<List<Product>> getAllProducts() async {
 
     final response = await productService.getAllProducts();
 
     log('products response: ${response.body}');
 
-    if(response.isSuccessful) {
-      return response.body as List<dynamic>;
+    if (response.isSuccessful) {
+      final List<dynamic> data = response.body;
+      return data.map((json) => Product.fromJson(json)).toList();
     }
     else {
       throw Exception(response.error);
@@ -36,17 +37,22 @@ class ProductRepository {
     }
   }
 
-  Future<void> createProduct(Map<String, dynamic> product) async {
+  Future<Product> createProduct(Map<String, dynamic> product) async {
 
     final response = await productService.createProduct(product);
 
     log('create product response: ${response.body}');
 
-    if(response.isSuccessful) {
-      return response.body;
+    try {
+      if(response.isSuccessful) {
+        return Product.fromJson(response.body);
+      }
+      else {
+        throw Exception(response.error);
+      }
     }
-    else {
-      throw Exception(response.error);
+    catch(e) {
+      throw Exception(response.error ?? 'Failed to add product.');
     }
 
   }
@@ -56,7 +62,13 @@ class ProductRepository {
     log('update product response: ${response.body}');
 
     try {
-      return 'Product updated.';
+      if(response.isSuccessful) {
+        return 'Product updated.';
+      }
+      else {
+        throw Exception(response.error);
+      }
+
     }
     catch(e) {
       throw Exception(response.error ?? 'Failed to update product.');
@@ -75,28 +87,30 @@ class ProductRepository {
     }
   }
 
-  Future<List<dynamic>> getCategories() async {
+  Future<List<String>> getCategories() async {
 
     final response = await productService.getCategories();
 
     log('get categories response: ${response.body}');
 
     if(response.isSuccessful) {
-      return response.body as List<dynamic>;
+      final List<dynamic> data = response.body;
+      return data.map((e) => e.toString()).toList();
     }
     else {
       throw Exception(response.error);
     }
   }
 
-  Future<List<dynamic>> getCategoryProducts(String category) async {
+  Future<List<Product>> getCategoryProducts(String category) async {
 
     final response = await productService.getCategoryProducts(category);
 
     log('get category products response: ${response.body}');
 
     if(response.isSuccessful) {
-      return response.body as List<dynamic>;
+      final List<dynamic> data = response.body;
+      return data.map((json) => Product.fromJson(json)).toList();
     }
     else {
       throw Exception(response.error);

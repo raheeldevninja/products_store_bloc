@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                     child: (state is AuthLoadingState)
                         ? const CircularProgressIndicator(color: Colors.blue)
-                        : const Text('Submit'),
+                        : const Text('Login'),
                   ),
                   const SizedBox(height: 24),
                   RichText(

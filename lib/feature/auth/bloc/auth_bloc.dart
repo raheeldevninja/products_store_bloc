@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_event.dart';
 import 'package:products_store_bloc/feature/auth/bloc/auth_state.dart';
 import 'package:products_store_bloc/feature/auth/repository/auth_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
@@ -10,6 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this.authRepository) : super(AuthInitialState()) {
     on<LoginSubmittedEvent>(_onLoginSubmitted);
     on<RegisterSubmittedEvent>(_onRegisterSubmittedEvent);
+    on<CheckLoginStatusEvent>(_onCheckLoginStatus);
   }
 
   void _onLoginSubmitted(LoginSubmittedEvent event, Emitter<AuthState> emit) async {
@@ -30,6 +32,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try{
       final response = await authRepository.login(event.username, event.password);
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('token', response['token']);
+
       emit(AuthSuccessState(response['token']));
     }
     catch(e) {
@@ -96,6 +103,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
     catch(e) {
       emit(AuthFailureState(e.toString()));
+    }
+  }
+
+  Future<void> _onCheckLoginStatus(CheckLoginStatusEvent event, Emitter<AuthState> emit) async {
+
+    final prefs = await SharedPreferences.getInstance();
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    final token = prefs.getString('token') ?? '';
+
+    if (isLoggedIn) {
+      emit(AuthSuccessState(token));
+    } else {
+      emit(AuthInitialState());
     }
   }
 

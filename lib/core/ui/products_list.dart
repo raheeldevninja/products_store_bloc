@@ -3,11 +3,13 @@ import 'package:products_store_bloc/core/product/model/product.dart';
 import 'package:products_store_bloc/feature/home/ui/widgets/product_item.dart';
 
 class ProductsList extends StatelessWidget {
-  final List<dynamic> products;
+  final List<Product> products;
+  final BuildContext productsPageContext;
 
   const ProductsList(
     this.products, {
     super.key,
+    required this.productsPageContext,
   });
 
   @override
@@ -17,8 +19,8 @@ class ProductsList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: products.length,
         itemBuilder: (context, index) {
-          final product = Product.fromJson(products[index]);
-          return ProductItem(product);
+          final product = products[index];
+          return ProductItem(product, productsPageContext: productsPageContext);
         },
       ),
     );

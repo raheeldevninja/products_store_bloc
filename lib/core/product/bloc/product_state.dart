@@ -11,7 +11,7 @@ class ProductInitialState extends ProductState {}
 class LoadingState extends ProductState {}
 
 class ProductLoadedState extends ProductState {
-  final List products;
+  final List<Product> products;
   ProductLoadedState(this.products);
 
   @override
@@ -44,7 +44,7 @@ class ErrorState extends ProductState {
 }
 
 class CategoryLoadedState extends ProductState {
-  final List categories;
+  final List<String> categories;
 
   CategoryLoadedState(this.categories);
 

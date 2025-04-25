@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_bloc/core/product/bloc/product_bloc.dart';
 import 'package:products_store_bloc/core/product/bloc/product_event.dart';
 import 'package:products_store_bloc/core/product/bloc/product_state.dart';
+import 'package:products_store_bloc/core/product/model/product.dart';
 import 'package:products_store_bloc/core/ui/products_list.dart';
 import 'package:products_store_bloc/feature/auth/ui/page/login_page.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_bloc.dart';
 import 'package:products_store_bloc/feature/cart/bloc/cart_state.dart';
 import 'package:products_store_bloc/feature/cart/ui/cart_page.dart';
 import 'package:products_store_bloc/feature/home/ui/widgets/categories_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,8 +21,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<dynamic> products = [];
-  List<dynamic> categories = [];
+  List<Product> products = [];
+  List<String> categories = [];
 
   int? _lastCartCount;
 
@@ -68,9 +70,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()));
+            onPressed: () async {
+
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.remove('isLoggedIn');
+              await prefs.remove('token');
+
+              if(context.mounted) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
+              }
             },
             icon: const Icon(Icons.exit_to_app),
           ),
@@ -107,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CategoriesList(categories),
-                  ProductsList(products),
+                  ProductsList(products, productsPageContext: context),
                 ],
               ),
 

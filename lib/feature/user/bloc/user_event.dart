@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:products_store_bloc/core/enums/user_type.dart';
 
-class UserEvent extends Equatable {
+abstract class UserEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
@@ -14,3 +14,5 @@ class SelectUser extends UserEvent {
   @override
   List<Object?> get props => [userType];
 }
+
+class LoadPersistedUser extends UserEvent {}
