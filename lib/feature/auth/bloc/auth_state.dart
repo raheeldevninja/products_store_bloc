@@ -45,3 +45,5 @@ class AuthFailureState extends AuthState {
 class AuthValidationError extends AuthState {
   const AuthValidationError({super.emailError, super.usernameError, super.passwordError});
 }
+
+class LoggedOut extends AuthState {}

@@ -12,6 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginSubmittedEvent>(_onLoginSubmitted);
     on<RegisterSubmittedEvent>(_onRegisterSubmittedEvent);
     on<CheckLoginStatusEvent>(_onCheckLoginStatus);
+    on<LogoutEvent>(_onLogoutEvent);
   }
 
   void _onLoginSubmitted(LoginSubmittedEvent event, Emitter<AuthState> emit) async {
@@ -117,6 +118,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       emit(AuthInitialState());
     }
+  }
+
+  _onLogoutEvent(LogoutEvent event, Emitter<AuthState> emit) async {
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('isLoggedIn');
+    await prefs.remove('token');
+    await prefs.remove('selected_user');
+
+    emit(LoggedOut());
+
   }
 
 }
